@@ -9,6 +9,16 @@ class MapModel(QObject):
         self._zoom = 14
         self._markers = []
 
+        # 無人機參數（新增）
+        self.drone_settings = {
+            "port": "",
+            "ip": "",
+            "spacing": "",
+            "alt_step": "",
+            "rtl_height": "",
+            "speed": "",
+        }
+
     @property
     def center(self):
         return self._center
@@ -37,4 +47,9 @@ class MapModel(QObject):
 
     def clear_markers(self):
         self._markers = []
+        self.state_changed.emit()
+
+    def set_drone_settings(self, settings: dict):
+        """存放無人機設定"""
+        self.drone_settings.update(settings)
         self.state_changed.emit()
